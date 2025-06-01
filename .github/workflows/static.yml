@@ -1,0 +1,3112 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptoais的小屋</title>
+    <link rel="icon" href="https://avatar.moonshot.cn/avatar/ct0tqnp1jfdfmiv7uli0/1742610615.jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --blur-amount: 10px;
+            --nav-position: top;
+            --animation-intensity: 1;
+            --background-image: url('https://images.unsplash.com/photo-1509475826633-fed577a2c71b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            --transition-speed: 0.4s;
+            --font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --title-blur: 2px;
+        }
+
+        .dark-mode {
+            --primary-color: #4da6ff;
+            --secondary-color: #36d97a;
+            --background-color: #1a1a2e;
+            --text-color: #e6e6ff;
+            --card-bg: rgba(30, 30, 46, 0.8);
+        }
+
+        /* 字体主题 */
+        .font-google-sans { --font-family: 'Google Sans', 'Segoe UI', sans-serif; }
+        .font-harmonyos { --font-family: 'HarmonyOS Sans SC', 'PingFang SC', sans-serif; }
+        .font-vivo-sans { --font-family: 'vivo Sans', 'Microsoft YaHei', sans-serif; }
+        .font-oppo-sans { --font-family: 'OPPOSans', 'PingFang SC', sans-serif; }
+        .font-misans { --font-family: 'MiSans', 'Microsoft YaHei', sans-serif; }
+        .font-noto-sans { --font-family: 'Noto Sans SC', 'PingFang SC', sans-serif; }
+
+        /* 主题颜色 */
+        .theme-blue {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+        }
+        
+        .theme-purple {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+        }
+        
+        .theme-orange {
+            --primary-color: #e67e22;
+            --secondary-color: #d35400;
+        }
+        
+        .theme-red {
+            --primary-color: #e74c3c;
+            --secondary-color: #c0392b;
+        }
+        
+        .theme-teal {
+            --primary-color: #1abc9c;
+            --secondary-color: #16a085;
+        }
+        
+        /* UI主题 */
+        .ui-fluent {
+            --border-radius: 8px;
+            --shadow-intensity: 0.1;
+            --element-depth: 0.5;
+        }
+        
+        .ui-material {
+            --border-radius: 4px;
+            --shadow-intensity: 0.2;
+            --element-depth: 1;
+        }
+        
+        .ui-neu {
+            --border-radius: 20px;
+            --shadow-intensity: 0.3;
+            --element-depth: 1.5;
+        }
+        
+        .ui-glass {
+            --border-radius: 16px;
+            --shadow-intensity: 0.05;
+            --element-depth: 0.3;
+        }
+        
+        .ui-minimal {
+            --border-radius: 0;
+            --shadow-intensity: 0;
+            --element-depth: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background: var(--background-image) no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all var(--transition-speed) ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(0px);
+            z-index: -2;
+        }
+
+        /* 欢迎页面样式 */
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .welcome-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 90%;
+            animation: fadeInUp 1s ease-out;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .welcome-title {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulse 2s infinite;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .current-time {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .language-selector {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+        }
+
+        .enter-btn {
+            position: relative;
+            padding: 18px 50px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .enter-btn:active {
+            transform: translateY(0);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+        
+        .ripple.dark {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        /* 主页面样式 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            display: none;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            filter: blur(var(--title-blur));
+            transition: filter 0.3s ease;
+        }
+        
+        .logo-text:hover {
+            filter: blur(0);
+        }
+
+        .nav-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            transition: all 0.4s ease;
+            width: auto;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-container.bottom {
+            top: auto;
+            bottom: 20px;
+        }
+        
+        .nav-container.left {
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+        
+        .nav-container.right {
+            top: 50%;
+            right: 20px;
+            left: auto;
+            transform: translateY(-50%);
+        }
+        
+        .nav-container.hidden {
+            opacity: 0.6;
+            transform: translateX(-50%) scale(0.8);
+        }
+        
+        .nav-container.hidden.bottom {
+            transform: translateX(-50%) scale(0.8);
+        }
+        
+        .nav-container.hidden.left, .nav-container.hidden.right {
+            transform: translateY(-50%) scale(0.8);
+        }
+
+        .nav-bar {
+            display: flex;
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .nav-bar.vertical {
+            flex-direction: column;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .nav-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .nav-item.active {
+            background: rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            filter: blur(var(--title-blur));
+            transition: filter 0.3s ease;
+        }
+        
+        .section-title:hover {
+            filter: blur(0);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn i {
+            font-size: 1.1em;
+        }
+
+        /* 设置面板 */
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg) scale(1.1);
+        }
+        
+        .guide-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-right: 10px;
+            z-index: 1000;
+        }
+
+        .guide-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 25px;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            transition: right 0.4s ease;
+            z-index: 2000;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .setting-group h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .setting-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .setting-option:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .setting-option label {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        /* 多功能菜单 */
+        .utility-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .utility-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .utility-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .utility-menu-container {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+            width: 200px;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .utility-menu-container.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        
+        .utility-menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .utility-menu-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .utility-menu-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* 发布界面 */
+        .blog-form {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .file-preview-item {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .file-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .file-preview-item .remove-file {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* 博客管理 */
+        .blog-list {
+            margin-top: 30px;
+        }
+        
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .add-blog-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(52, 152, 219, 0.1);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .add-blog-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+            padding-left: 15px;
+            padding-right: 25px;
+        }
+        
+        .add-blog-btn:hover .add-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .add-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .add-blog-btn:hover .add-icon {
+            transform: translateX(-8px);
+        }
+        
+        .add-text {
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 15px;
+            white-space: nowrap;
+        }
+
+        .blog-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .blog-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .blog-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .blog-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .blog-action-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .blog-content {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .blog-tag {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* 博客阅读器 */
+        .blog-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .blog-viewer.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .blog-content-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-blog {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-blog:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .blog-content-view {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .blog-content-view img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 富文本编辑器 */
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        
+        .editor-btn {
+            padding: 5px 10px;
+            border: none;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .editor-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .editor-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border: none;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .editor-content {
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+        }
+        
+        .editor-content:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* 导航助手 */
+        .guide-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .guide-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .guide-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .guide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .guide-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .guide-progress {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .progress-step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .progress-step.active {
+            background: var(--primary-color);
+        }
+
+        .guide-step {
+            display: none;
+        }
+
+        .guide-step.active {
+            display: block;
+        }
+
+        .guide-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .guide-step h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+        }
+        
+        .guide-step h3 i {
+            font-size: 1.5rem;
+        }
+
+        /* 登录模态框 */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        
+        .login-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .login-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* 资源分类 */
+        .category {
+            margin-bottom: 30px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 15px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .category-title {
+            flex: 1;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .category-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .category.collapsed .category-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .category-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .category.collapsed .category-content {
+            display: none;
+        }
+        
+        /* 彩蛋样式 */
+        .easter-egg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 3000;
+            max-width: 80%;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        
+        .easter-egg.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .easter-egg h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        
+        .emoji {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .sync-indicator.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 3.5rem;
+            }
+            
+            .current-time {
+                font-size: 1.8rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .nav-bar {
+                flex-direction: column;
+            }
+            
+            .nav-container {
+                top: 10px;
+                left: 10px;
+                right: auto;
+                transform: none;
+                width: auto;
+            }
+            
+            .nav-container.hidden {
+                opacity: 0.6;
+                transform: scale(0.8);
+                left: 5px;
+                top: 5px;
+            }
+            
+            .nav-bar {
+                padding: 8px;
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .blog-content-container {
+                padding: 20px;
+            }
+            
+            .welcome-content {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 10px 0;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .nav-container .nav-bar {
+                max-width: 90vw;
+            }
+            
+            .mobile-hidden {
+                display: none;
+            }
+            
+            .utility-menu-container {
+                left: 0;
+                right: auto;
+                width: calc(100% - 40px);
+                margin: 0 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .current-time {
+                font-size: 1.2rem;
+            }
+            
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                min-width: 60px;
+            }
+            
+            .enter-btn {
+                padding: 12px 30px;
+                font-size: 1.2rem;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.8rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        /* 深色模式切换 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* 背景颜色选项 */
+        .bg-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .bg-option {
+            height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-option:hover {
+            transform: scale(1.05);
+        }
+
+        .bg-option.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+        }
+
+        /* 字体选项 */
+        .font-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .font-option {
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .font-option:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .font-option.active {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        /* 主题选项 */
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .theme-option {
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-option.active {
+            border-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .theme-blue { background: linear-gradient(135deg, #3498db, #2ecc71); }
+        .theme-purple { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .theme-orange { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .theme-red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .theme-teal { background: linear-gradient(135deg, #1abc9c, #16a085); }
+        
+        /* UI主题选项 */
+        .ui-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .ui-option {
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .ui-option:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .ui-option.active {
+            border-color: var(--primary-color);
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .ui-option h4 {
+            margin: 10px 0 5px;
+            color: var(--primary-color);
+        }
+
+        /* 自定义上传 */
+        .upload-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .upload-option {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .upload-btn {
+            padding: 10px 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        /* 背景幻灯片设置 */
+        .slideshow-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .slideshow-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .slideshow-order {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .slideshow-order-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slideshow-order-btn.active {
+            background: rgba(52, 152, 219, 0.3);
+        }
+        
+        /* 下拉选择器 */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .select-header {
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .select-header:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .select-options.open {
+            max-height: 300px;
+            opacity: 1;
+        }
+        
+        .select-option {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .select-option:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        /* 3D效果 */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .card-3d .card-content {
+            transform: translateZ(20px);
+        }
+        
+        /* 触底反弹效果 */
+        .bounce {
+            animation: bounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+    </style>
+</head>
+<body>
+    <!-- 欢迎页面 -->
+    <div id="welcomePage" class="welcome-container">
+        <div class="welcome-content">
+            <h1 class="welcome-title" id="welcomeText">你好!</h1>
+            <div class="current-time" id="currentTime">2023年11月15日 星期三 14:30:45</div>
+            
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="zh-CN">简体中文</button>
+                <button class="lang-btn" data-lang="zh-TW">繁體中文</button>
+                <button class="lang-btn" data-lang="fr">Français</button>
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="es">Español</button>
+                <button class="lang-btn" data-lang="hi">हिन्दी</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+                <button class="lang-btn" data-lang="ko">한국어</button>
+            </div>
+            
+            <button id="enterBtn" class="enter-btn">进入网站</button>
+        </div>
+    </div>
+    
+    <!-- 主页面（初始隐藏） -->
+    <div id="mainPage" class="container">
+        <div class="utility-menu">
+            <div class="utility-btn" id="utilityMenuBtn">
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <div class="utility-menu-container" id="utilityMenu">
+                <div class="utility-menu-item" id="darkModeToggleBtn">
+                    <div class="utility-menu-icon"><i class="fas fa-moon"></i></div>
+                    <span>暗色模式</span>
+                </div>
+                <div class="utility-menu-item" id="troubleshootBtn">
+                    <div class="utility-menu-icon"><i class="fas fa-tools"></i></div>
+                    <span>疑难解答</span>
+                </div>
+                <div class="utility-menu-item" id="loginUtilityBtn">
+                    <div class="utility-menu-icon"><i class="fas fa-sign-in-alt"></i></div>
+                    <span>登录</span>
+                </div>
+                <div class="utility-menu-item" id="settingsUtilityBtn">
+                    <div class="utility-menu-icon"><i class="fas fa-cog"></i></div>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <div class="logo-text">Aptoais的小屋</div>
+            </div>
+        </div>
+        
+        <div id="navContainer" class="nav-container">
+            <div class="nav-bar">
+                <div class="nav-item active" data-target="blog">
+                    <i class="fas fa-pen nav-icon"></i>
+                    <span>发布博客</span>
+                </div>
+                <div class="nav-item" data-target="resources">
+                    <i class="fas fa-globe nav-icon"></i>
+                    <span>常用网站</span>
+                </div>
+                <div class="nav-item" data-target="content">
+                    <i class="fas fa-user nav-icon"></i>
+                    <span>我的内容</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 博客发布部分 -->
+        <div id="blog" class="content-section active">
+            <div class="blog-header">
+                <h2 class="section-title">博客</h2>
+                <button class="add-blog-btn" id="addBlogBtn">
+                    <span class="add-icon">+</span>
+                    <span class="add-text">发布博客</span>
+                </button>
+            </div>
+            
+            <div class="blog-list">
+                <div id="blogListContainer">
+                    <!-- 预置博客会通过JS加载 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 常用网站部分 -->
+        <div id="resources" class="content-section">
+            <h2 class="section-title">资源网站推荐</h2>
+            <div class="categories-container">
+                <!-- 分类网站会通过JS加载 -->
+            </div>
+        </div>
+        
+        <!-- 我的内容部分 -->
+        <div id="content" class="content-section">
+            <h2 class="section-title">我的社交媒体</h2>
+            <div class="card-grid">
+                <!-- 社交媒体卡片会通过JS加载 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 博客阅读器 -->
+    <div id="blogViewer" class="blog-viewer">
+        <div class="blog-content-container">
+            <div class="close-blog" id="closeBlog"><i class="fas fa-times"></i></div>
+            <div id="blogContentView"></div>
+        </div>
+    </div>
+    
+    <!-- 设置面板 -->
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2>网站设置</h2>
+            <button class="close-btn" id="closeSettings">×</button>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-globe"></i> 语言设置</h3>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="zh-CN" checked> 简体中文
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="zh-TW"> 繁體中文
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="fr"> Français
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="en"> English
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="es"> Español
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="hi"> हिन्दी
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="ja"> 日本語
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="language" value="ko"> 한국어
+                </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-paint-brush"></i> 外观设置</h3>
+            <div class="setting-option">
+                <label for="darkMode">深色模式</label>
+                <input type="checkbox" id="darkMode">
+            </div>
+            
+            <div class="setting-option">
+                <label for="animationIntensity">动画强度</label>
+                <input type="range" id="animationIntensity" min="0" max="2" step="0.5" value="1">
+            </div>
+            
+            <div class="setting-option">
+                <label for="titleBlur">标题模糊效果</label>
+                <input type="range" id="titleBlur" min="0" max="4" step="0.5" value="2">
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-font"></i> 字体设置</h3>
+            <div class="font-options">
+                <div class="font-option" data-font="google-sans">Google Sans</div>
+                <div class="font-option" data-font="harmonyos">HarmonyOS Sans</div>
+                <div class="font-option" data-font="vivo-sans">vivo Sans</div>
+                <div class="font-option" data-font="oppo-sans">oppo sans</div>
+                <div class="font-option" data-font="misans">Misans</div>
+                <div class="font-option" data-font="noto-sans">noto sans</div>
+            </div>
+            
+            <div class="upload-option" style="margin-top: 15px;">
+                <label>自定义字体上传</label>
+                <div class="upload-btn" id="fontUploadBtn">
+                    <i class="fas fa-font"></i>
+                    <span>选择字体文件</span>
+                    <input type="file" id="fontUpload" accept=".ttf,.otf,.woff" style="display: none;">
+                </div>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-palette"></i> 主题颜色</h3>
+            <div class="theme-options">
+                <div class="theme-option theme-blue active" data-theme="blue"></div>
+                <div class="theme-option theme-purple" data-theme="purple"></div>
+                <div class="theme-option theme-orange" data-theme="orange"></div>
+                <div class="theme-option theme-red" data-theme="red"></div>
+                <div class="theme-option theme-teal" data-theme="teal"></div>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-object-group"></i> UI主题</h3>
+            <div class="ui-options">
+                <div class="ui-option" data-ui="fluent">
+                    <i class="fab fa-microsoft fa-2x"></i>
+                    <h4>Fluent UI</h4>
+                    <p>微软设计风格</p>
+                </div>
+                <div class="ui-option" data-ui="material">
+                    <i class="fab fa-google fa-2x"></i>
+                    <h4>Material You</h4>
+                    <p>谷歌设计风格</p>
+                </div>
+                <div class="ui-option" data-ui="neu">
+                    <i class="fas fa-circle fa-2x"></i>
+                    <h4>Neumorphism</h4>
+                    <p>新拟态设计</p>
+                </div>
+                <div class="ui-option" data-ui="glass">
+                    <i class="fas fa-glass-martini-alt fa-2x"></i>
+                    <h4>Glassmorphism</h4>
+                    <p>玻璃拟态设计</p>
+                </div>
+                <div class="ui-option" data-ui="minimal">
+                    <i class="fas fa-minus fa-2x"></i>
+                    <h4>Minimalism</h4>
+                    <p>极简主义</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-blur"></i> 模糊效果</h3>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="5"> 亚克力 (5px)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="10" checked> 薄亚克力 (10px)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="15"> 云母 (15px)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="20"> 云母AIT (20px)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="25"> 深度模糊 (25px)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="blurEffect" value="30"> 极致模糊 (30px)
+                </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-compass"></i> 导航栏位置</h3>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="navPosition" value="top" checked> 顶部
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="navPosition" value="bottom"> 底部
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="navPosition" value="left"> 左侧
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="navPosition" value="right"> 右侧
+                </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-image"></i> 背景设置</h3>
+            <div class="custom-select">
+                <div class="select-header" id="bgTypeHeader">
+                    <span>背景类型</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="select-options" id="bgTypeOptions">
+                    <div class="select-option" data-value="slideshow">幻灯片循环</div>
+                    <div class="select-option" data-value="image">图片</div>
+                    <div class="select-option" data-value="solid">纯色</div>
+                    <div class="select-option" data-value="custom">自定义</div>
+                </div>
+            </div>
+            
+            <div id="bgSlideshowSettings" style="display:none; margin-top:15px;">
+                <h4>幻灯片设置</h4>
+                <div class="bg-options">
+                    <div class="bg-option active" style="background-image: url('https://images.unsplash.com/photo-1509475826633-fed577a2c71b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-blue"></div>
+                    <div class="bg-option" style="background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-green"></div>
+                    <div class="bg-option" style="background-image: url('https://images.unsplash.com/photo-1554629947-334ff61d85dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-pink"></div>
+                    <div class="bg-option" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-purple"></div>
+                    <div class="bg-option" style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-bluegreen"></div>
+                    <div class="bg-option" style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');" data-bg="gradient-dark"></div>
+                </div>
+                
+                <div class="slideshow-order">
+                    <button class="slideshow-order-btn active">顺序播放</button>
+                    <button class="slideshow-order-btn">倒序播放</button>
+                    <button class="slideshow-order-btn">随机播放</button>
+                </div>
+            </div>
+            
+            <div class="upload-option" style="margin-top: 15px;">
+                <label>上传自定义背景</label>
+                <div class="upload-btn" id="bgUploadBtn">
+                    <i class="fas fa-image"></i>
+                    <span>选择背景图片</span>
+                    <input type="file" id="bgUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <h3><i class="fas fa-icons"></i> 图标设置</h3>
+            <div class="upload-option">
+                <label>上传自定义图标</label>
+                <div class="upload-btn" id="iconUploadBtn">
+                    <i class="fas fa-icons"></i>
+                    <span>选择图标文件</span>
+                    <input type="file" id="iconUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+        </div>
+        
+        <button id="saveSettings" class="btn" style="width: 100%;"><i class="fas fa-save"></i> 保存设置</button>
+    </div>
+    
+    <!-- 深色模式切换按钮 -->
+    <button id="themeToggle" class="theme-toggle">🌙</button>
+    
+    <!-- 发布博客面板 -->
+    <div id="publishPanel" class="settings-panel">
+        <div class="settings-header">
+            <h2>发布新博客</h2>
+            <button class="close-btn" id="closePublish">×</button>
+        </div>
+        
+        <div class="blog-form">
+            <div class="form-group">
+                <label for="blogTitle">标题</label>
+                <input type="text" id="blogTitle" placeholder="输入博客标题">
+            </div>
+            <div class="form-group">
+                <label for="blogTags">标签（逗号分隔）</label>
+                <input type="text" id="blogTags" placeholder="技术, 设计, 生活">
+            </div>
+            <div class="form-group">
+                <label>博客内容</label>
+                <div class="editor-toolbar">
+                    <button class="editor-btn" data-command="bold"><i class="fas fa-bold"></i></button>
+                    <button class="editor-btn" data-command="italic"><i class="fas fa-italic"></i></button>
+                    <button class="editor-btn" data-command="underline"><i class="fas fa-underline"></i></button>
+                    <button class="editor-btn" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+                    <button class="editor-btn" data-command="insertOrderedList"><i class="fas fa-list-ol"></i></button>
+                    <button class="editor-btn" data-command="createLink"><i class="fas fa-link"></i></button>
+                    <button class="editor-btn" data-command="formatBlock" data-value="h2">H2</button>
+                    <button class="editor-btn" data-command="formatBlock" data-value="h3">H3</button>
+                    <input type="color" class="color-picker" id="textColor">
+                </div>
+                <div class="editor-content" id="blogContent" contenteditable="true"></div>
+            </div>
+            <div class="form-group">
+                <label>上传附件</label>
+                <div class="file-upload">
+                    <input type="file" id="blogFile" accept="image/*" multiple>
+                    <div class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>点击或拖拽文件到此处</span>
+                    </div>
+                </div>
+                <div id="fileList" class="file-preview"></div>
+            </div>
+            <div class="form-group">
+                <label>发布为</label>
+                <select id="blogVisibility">
+                    <option value="public">公开</option>
+                    <option value="private">私密</option>
+                    <option value="draft">草稿</option>
+                </select>
+            </div>
+            <button id="publishBtn" class="btn"><i class="fas fa-paper-plane"></i> 发布博客</button>
+        </div>
+    </div>
+
+    <!-- 导航助手 -->
+    <div class="guide-overlay" id="guideOverlay">
+        <div class="guide-content">
+            <div class="guide-header">
+                <h2>导航助手</h2>
+                <button class="guide-close" id="closeGuide">×</button>
+            </div>
+            
+            <div class="guide-progress">
+                <div class="progress-step active"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+                <div class="progress-step"></div>
+            </div>
+            
+            <div class="guide-step active" id="step1">
+                <h3><i class="fas fa-home"></i> 欢迎使用Aptoais小屋</h3>
+                <p>本向导将帮助您快速了解Aptoais小屋网站的各项功能。网站分为三个主要部分：博客发布、常用网站和我的内容。</p>
+                <p>您可以通过右上角的设置按钮自定义网站外观和功能。</p>
+                <div class="guide-navigation">
+                    <button class="btn" id="nextStep1">下一步</button>
+                </div>
+            </div>
+            
+            <div class="guide-step" id="step2">
+                <h3><i class="fas fa-pen"></i> 博客功能</h3>
+                <p>在"发布博客"页面，您可以撰写新博客并发布。使用富文本编辑器可以调整字体、颜色、大小等格式。</p>
+                <p>已发布的博客会显示在下方列表中，点击博客可以阅读全文，点击编辑按钮可以修改内容。</p>
+                <div class="guide-navigation">
+                    <button class="btn" id="prevStep2">上一步</button>
+                    <button class="btn" id="nextStep2">下一步</button>
+                </div>
+            </div>
+            
+            <div class="guide-step" id="step3">
+                <h3><i class="fas fa-globe"></i> 资源网站</h3>
+                <p>"常用网站"页面收集了各种有用的资源网站，涵盖技术、设计、开发等多个领域。</p>
+                <p>每个网站卡片包含简要描述，点击"阅读更多"按钮可以直接访问该网站。</p>
+                <div class="guide-navigation">
+                    <button class="btn" id="prevStep3">上一步</button>
+                    <button class="btn" id="nextStep3">下一步</button>
+                </div>
+            </div>
+            
+            <div class="guide-step" id="step4">
+                <h3><i class="fas fa-user"></i> 我的内容</h3>
+                <p>在"我的内容"页面，您可以管理个人社交媒体链接和作品集。</p>
+                <p>这里展示了您在哔哩哔哩、小红书等平台的内容，方便访问者了解您的创作。</p>
+                <div class="guide-navigation">
+                    <button class="btn" id="prevStep4">上一步</button>
+                    <button class="btn" id="nextStep4">下一步</button>
+                </div>
+            </div>
+            
+            <div class="guide-step" id="step5">
+                <h3><i class="fas fa-cog"></i> 网站设置</h3>
+                <p>点击右上角的齿轮图标打开设置面板。您可以自定义语言、主题、字体等多项设置。</p>
+                <p>所有更改会自动保存，下次访问时仍会保留。您还可以上传自定义背景和字体。</p>
+                <div class="guide-navigation">
+                    <button class="btn" id="prevStep5">上一步</button>
+                    <button class="btn" id="finishGuide">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 登录模态框 -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>登录账号</h2>
+                <button class="close-btn" id="closeLogin">×</button>
+            </div>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">电子邮箱</label>
+                    <input type="email" id="loginEmail" placeholder="输入您的电子邮箱">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" placeholder="输入您的密码">
+                </div>
+                
+                <button class="btn" style="width: 100%;" id="loginSubmit">登录</button>
+                
+                <div class="social-login">
+                    <button class="social-btn" style="background: #3b5998;">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="social-btn" style="background: #1da1f2;">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button class="social-btn" style="background: #db4437;">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-btn" style="background: #333;" id="githubLogin">
+                        <i class="fab fa-github"></i>
+                    </button>
+                </div>
+                
+                <div class="login-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe"> 记住我
+                    </label>
+                    <a href="#" style="color: var(--primary-color);">忘记密码?</a>
+                </div>
+                
+                <div class="login-footer">
+                    还没有账号? <a href="#" style="color: var(--primary-color);">立即注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 彩蛋 -->
+    <div class="easter-egg" id="easterEgg">
+        <h2>Aptoais提示</h2>
+        <div class="emoji">🚀✨</div>
+        <p>恭喜您发现了网站的彩蛋！感谢您对Aptoais小屋的支持！</p>
+        <p>网站数据正在与云端同步...</p>
+        <button class="btn" id="closeEasterEgg">关闭</button>
+    </div>
+    
+    <!-- 同步指示器 -->
+    <div class="sync-indicator" id="syncIndicator">
+        <i class="fas fa-sync fa-spin"></i>
+        <span>正在与云端同步数据...</span>
+    </div>
+
+    <script>
+        // 多语言支持 - 扩展翻译字典
+        const translations = {
+            'zh-CN': {
+                welcome: "你好!",
+                enter: "进入网站",
+                blogTitle: "发布博客",
+                resourcesTitle: "常用网站",
+                contentTitle: "我的内容",
+                publish: "发布博客",
+                blogList: "已发布的博客",
+                noBlogs: "暂无发布的博客",
+                readMore: "阅读全文",
+                goToSite: "跳转网站",
+                edit: "编辑",
+                delete: "删除",
+                settingsTitle: "网站设置",
+                language: "语言设置",
+                appearance: "外观设置",
+                darkMode: "深色模式",
+                fonts: "字体设置",
+                themes: "主题颜色",
+                blurEffects: "模糊效果",
+                navPosition: "导航栏位置",
+                background: "背景设置",
+                animations: "动画效果",
+                customUploads: "自定义上传",
+                saveSettings: "保存设置",
+                guideTitle: "导航助手",
+                login: "登录",
+                logout: "注销",
+                account: "账号",
+                publishBlog: "发布博客",
+                addBlog: "发布博客",
+                categoryTech: "技术资源",
+                categoryDesign: "设计与创意",
+                categoryLearning: "学习平台",
+                categoryTools: "开发工具",
+                darkModeText: "暗色模式",
+                troubleshoot: "疑难解答",
+                loginText: "登录",
+                settingsText: "设置"
+            },
+            // 其他语言翻译...
+        };
+
+        let currentLanguage = 'zh-CN';
+        let uploadedFiles = [];
+        let clickCount = 0;
+        let isLoggedIn = false;
+        
+        // 预置博客数据
+        const sampleBlogs = [
+            // 与之前相同
+        ];
+
+        // 网站资源数据 - 分类展示
+        const resources = {
+            tech: {
+                title: "技术资源",
+                icon: "fas fa-code",
+                items: [
+                    {
+                        icon: "fab fa-windows",
+                        title: "WinWorld",
+                        description: "提供历史操作系统和软件的宝库，包含各种经典版本的Windows、DOS、Mac OS等。",
+                        link: "https://winworldpc.com/library/operating-systems"
+                    },
+                    {
+                        icon: "fas fa-compact-disc",
+                        title: "MSDN, 我告诉你",
+                        description: "提供微软官方原版系统镜像下载，包含Windows各版本、Office套件及开发工具。",
+                        link: "https://next.itellyou.cn/"
+                    },
+                    {
+                        icon: "fas fa-flask",
+                        title: "BetaWorld",
+                        description: "专注于Beta版操作系统和软件的收集与分享，是技术爱好者的宝藏站点。",
+                        link: "https://www.betaworld.cn"
+                    },
+                    {
+                        icon: "fab fa-linux",
+                        title: "Linux Mirror",
+                        description: "各大Linux发行版的官方镜像下载站点，提供快速稳定的下载服务。",
+                        link: "https://mirrors.aliyun.com"
+                    },
+                    {
+                        icon: "fab fa-stack-overflow",
+                        title: "Stack Overflow",
+                        description: "全球最大的程序员问答社区，解决开发过程中遇到的各种技术问题。",
+                        link: "https://stackoverflow.com"
+                    }
+                ]
+            },
+            design: {
+                title: "设计与创意",
+                icon: "fas fa-palette",
+                items: [
+                    {
+                        icon: "fab fa-figma",
+                        title: "Figma Community",
+                        description: "UI设计资源和模板的宝库，包含图标、界面组件和完整的设计系统。",
+                        link: "https://www.figma.com/community"
+                    },
+                    {
+                        icon: "fas fa-palette",
+                        title: "Dribbble",
+                        description: "设计师展示作品、获取灵感的平台，汇集全球顶尖设计作品。",
+                        link: "https://dribbble.com"
+                    },
+                    {
+                        icon: "fas fa-drafting-compass",
+                        title: "Behance",
+                        description: "Adobe旗下的创意作品展示平台，展示全球设计师的优秀作品。",
+                        link: "https://www.behance.net"
+                    },
+                    {
+                        icon: "fas fa-vector-square",
+                        title: "Freepik",
+                        description: "免费和付费的设计资源库，包含矢量图、图标、模板等。",
+                        link: "https://www.freepik.com"
+                    },
+                    {
+                        icon: "fas fa-icons",
+                        title: "Iconfinder",
+                        description: "提供高质量的图标资源，支持SVG、PNG等多种格式下载。",
+                        link: "https://www.iconfinder.com"
+                    }
+                ]
+            },
+            learning: {
+                title: "学习平台",
+                icon: "fas fa-graduation-cap",
+                items: [
+                    {
+                        icon: "fab fa-free-code-camp",
+                        title: "FreeCodeCamp",
+                        description: "免费学习编程的社区，包含HTML、CSS、JavaScript等完整课程体系。",
+                        link: "https://www.freecodecamp.org"
+                    },
+                    {
+                        icon: "fab fa-dev",
+                        title: "Dev.to",
+                        description: "面向开发者的社区平台，分享技术文章、讨论开发实践和行业趋势。",
+                        link: "https://dev.to"
+                    },
+                    {
+                        icon: "fas fa-code",
+                        title: "CodePen",
+                        description: "前端开发者的游乐场，在线编写、测试和分享HTML、CSS和JavaScript代码片段。",
+                        link: "https://codepen.io"
+                    },
+                    {
+                        icon: "fas fa-book",
+                        title: "MDN Web Docs",
+                        description: "Mozilla开发者网络，提供最权威的Web技术文档和教程。",
+                        link: "https://developer.mozilla.org"
+                    },
+                    {
+                        icon: "fas fa-laptop-code",
+                        title: "LeetCode",
+                        description: "程序员刷题平台，提升算法能力，准备技术面试的最佳选择。",
+                        link: "https://leetcode.com"
+                    }
+                ]
+            },
+            tools: {
+                title: "开发工具",
+                icon: "fas fa-tools",
+                items: [
+                    {
+                        icon: "fab fa-github",
+                        title: "GitHub",
+                        description: "全球最大的代码托管平台，开源项目的聚集地，支持版本控制和协作开发。",
+                        link: "https://github.com"
+                    },
+                    {
+                        icon: "fas fa-terminal",
+                        title: "CodeSandbox",
+                        description: "在线代码编辑器和IDE，支持多种框架，快速创建和分享Web应用。",
+                        link: "https://codesandbox.io"
+                    },
+                    {
+                        icon: "fas fa-server",
+                        title: "Netlify",
+                        description: "静态网站托管平台，提供自动化构建、部署和CDN加速服务。",
+                        link: "https://www.netlify.com"
+                    },
+                    {
+                        icon: "fab fa-js",
+                        title: "JSFiddle",
+                        description: "在线JavaScript代码测试工具，快速分享前端代码片段。",
+                        link: "https://jsfiddle.net"
+                    },
+                    {
+                        icon: "fas fa-cloud",
+                        title: "Glitch",
+                        description: "在线编程平台，实时协作，快速创建和部署Web应用。",
+                        link: "https://glitch.com"
+                    }
+                ]
+            }
+        };
+
+        // 社交媒体数据
+        const socialMedia = [
+            {
+                icon: "fab fa-bilibili",
+                title: "哔哩哔哩",
+                description: "我的B站频道，分享技术教程、开发经验和生活Vlog，欢迎关注！",
+                link: "https://space.bilibili.com/517688095"
+            },
+            {
+                icon: "fab fa-xing",
+                title: "小红书",
+                description: "在小红书上分享生活日常、旅行见闻和好物推荐，记录生活点滴。",
+                link: "https://www.xiaohongshu.com/user/profile/62c7d20300000000020011c7"
+            },
+            {
+                icon: "fas fa-file-alt",
+                title: "技术文档",
+                description: "我在GitHub上的技术文档和开源项目，涵盖前端开发、设计模式和工程实践等内容。",
+                link: "https://github.com/Aptoais/Aptoais"
+            }
+        ];
+
+        // 更新时间显示
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            
+            let timeString;
+            try {
+                timeString = now.toLocaleDateString(currentLanguage, options);
+            } catch (e) {
+                timeString = now.toLocaleDateString('zh-CN', options);
+            }
+            
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        // 波纹效果
+        function createRipple(event, dark = false) {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add("ripple");
+            
+            if (dark) {
+                circle.classList.add("dark");
+            }
+            
+            const ripple = button.getElementsByClassName("ripple")[0];
+            if (ripple) ripple.remove();
+            
+            button.appendChild(circle);
+        }
+        
+        // 切换页面
+        function enterWebsite(event) {
+            createRipple(event);
+            
+            document.getElementById('welcomePage').style.opacity = '0';
+            document.getElementById('welcomePage').style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                document.getElementById('welcomePage').style.display = 'none';
+                document.getElementById('mainPage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('mainPage').classList.add('show');
+                    loadBlogs();
+                    loadResources();
+                    loadSocialMedia();
+                    initEditor();
+                }, 50);
+            }, 500);
+        }
+        
+        // 切换内容部分
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(navItem => navItem.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    
+                    item.classList.add('active');
+                    const target = item.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        }
+        
+        // 加载博客列表
+        function loadBlogs() {
+            const container = document.getElementById('blogListContainer');
+            const blogs = JSON.parse(localStorage.getItem('blogs')) || sampleBlogs;
+            
+            if (blogs.length === 0) {
+                container.innerHTML = `<div class="no-blogs">${translations[currentLanguage].noBlogs}</div>`;
+                return;
+            }
+            
+            container.innerHTML = blogs.map(blog => {
+                const date = new Date(blog.date);
+                const formattedDate = date.toLocaleDateString(currentLanguage, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                return `
+                    <div class="blog-item" data-id="${blog.id}">
+                        <div class="blog-header-row">
+                            <h3 class="blog-title">${blog.title}</h3>
+                            <div class="blog-date">${formattedDate}</div>
+                        </div>
+                        <div class="blog-content">${blog.content.substring(0, 200).replace(/<[^>]*>?/gm, '')}...</div>
+                        <div class="blog-tags">
+                            ${blog.tags.split(',').map(tag => `<span class="blog-tag">${tag.trim()}</span>`).join('')}
+                        </div>
+                        <div class="blog-actions">
+                            <button class="blog-action-btn edit-blog" data-id="${blog.id}">
+                                <i class="fas fa-edit"></i> ${translations[currentLanguage].edit}
+                            </button>
+                            <button class="blog-action-btn delete-blog" data-id="${blog.id}">
+                                <i class="fas fa-trash"></i> ${translations[currentLanguage].delete}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // 添加点击事件
+            document.querySelectorAll('.blog-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (e.target.closest('.blog-action-btn')) return;
+                    
+                    const blogId = this.dataset.id;
+                    const blog = blogs.find(b => b.id == blogId);
+                    openBlogViewer(blog);
+                });
+            });
+            
+            // 添加编辑按钮事件
+            document.querySelectorAll('.edit-blog').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const blogId = this.dataset.id;
+                    const blog = blogs.find(b => b.id == blogId);
+                    editBlog(blog);
+                });
+            });
+            
+            // 添加删除按钮事件
+            document.querySelectorAll('.delete-blog').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const blogId = this.dataset.id;
+                    deleteBlog(blogId);
+                });
+            });
+        }
+        
+        // 打开博客阅读器
+        function openBlogViewer(blog) {
+            const viewer = document.getElementById('blogViewer');
+            const content = document.getElementById('blogContentView');
+            
+            const date = new Date(blog.date);
+            const formattedDate = date.toLocaleDateString(currentLanguage, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            content.innerHTML = `
+                <h1>${blog.title}</h1>
+                <div class="blog-date">${formattedDate}</div>
+                <div class="blog-tags">
+                    ${blog.tags.split(',').map(tag => `<span class="blog-tag">${tag.trim()}</span>`).join('')}
+                </div>
+                <div class="blog-content-view">${blog.content}</div>
+            `;
+            
+            viewer.classList.add('active');
+        }
+        
+        // 编辑博客
+        function editBlog(blog) {
+            document.getElementById('blogTitle').value = blog.title;
+            document.getElementById('blogTags').value = blog.tags;
+            document.getElementById('blogContent').innerHTML = blog.content;
+            document.getElementById('publishPanel').classList.add('open');
+            
+            // 更新发布按钮
+            const publishBtn = document.getElementById('publishBtn');
+            publishBtn.dataset.editId = blog.id;
+            publishBtn.innerHTML = `<i class="fas fa-save"></i> ${translations[currentLanguage].edit}`;
+        }
+        
+        // 删除博客
+        function deleteBlog(blogId) {
+            if (confirm("确定要删除这篇博客吗？此操作不可撤销。")) {
+                let blogs = JSON.parse(localStorage.getItem('blogs')) || sampleBlogs;
+                blogs = blogs.filter(blog => blog.id != blogId);
+                localStorage.setItem('blogs', JSON.stringify(blogs));
+                loadBlogs();
+            }
+        }
+        
+        // 加载资源网站
+        function loadResources() {
+            const container = document.querySelector('.categories-container');
+            container.innerHTML = '';
+            
+            for (const category in resources) {
+                const catData = resources[category];
+                
+                const categoryHTML = `
+                    <div class="category" data-category="${category}">
+                        <div class="category-header">
+                            <i class="${catData.icon}"></i>
+                            <div class="category-title">${catData.title}</div>
+                            <i class="fas fa-chevron-down category-icon"></i>
+                        </div>
+                        <div class="category-content">
+                            ${catData.items.map(resource => `
+                                <div class="card">
+                                    <h3><span class="card-icon"><i class="${resource.icon}"></i></span> ${resource.title}</h3>
+                                    <p>${resource.description}</p>
+                                    <a href="${resource.link}" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> ${translations[currentLanguage].goToSite}</a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += categoryHTML;
+            }
+            
+            // 添加分类折叠事件
+            document.querySelectorAll('.category-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const category = this.closest('.category');
+                    category.classList.toggle('collapsed');
+                });
+            });
+        }
+        
+        // 加载社交媒体
+        function loadSocialMedia() {
+            const container = document.querySelector('#content .card-grid');
+            container.innerHTML = socialMedia.map(social => `
+                <div class="card card-3d">
+                    <div class="card-content">
+                        <h3><span class="card-icon"><i class="${social.icon}"></i></span> ${social.title}</h3>
+                        <p>${social.description}</p>
+                        <a href="${social.link}" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> ${translations[currentLanguage].goToSite}</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 设置面板功能
+        function setupSettings() {
+            // ...设置面板功能代码...
+        }
+        
+        // 初始化富文本编辑器
+        function initEditor() {
+            // ...编辑器初始化代码...
+        }
+        
+        // 语言切换
+        function applyLanguage(lang) {
+            // ...语言切换功能代码...
+        }
+        
+        // 导航助手功能
+        function setupGuide() {
+            // ...导航助手功能代码...
+        }
+        
+        // 设置导航栏位置
+        function setupNavPosition() {
+            // ...导航栏位置设置代码...
+        }
+        
+        // 文件上传处理
+        function setupFileUpload() {
+            // ...文件上传功能代码...
+        }
+        
+        // 多功能菜单
+        function setupUtilityMenu() {
+            const menuBtn = document.getElementById('utilityMenuBtn');
+            const menu = document.getElementById('utilityMenu');
+            
+            menuBtn.addEventListener('click', function() {
+                menu.classList.toggle('open');
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!menuBtn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('open');
+                }
+            });
+            
+            // 菜单项点击事件
+            document.getElementById('darkModeToggleBtn').addEventListener('click', function() {
+                document.getElementById('darkMode').click();
+                menu.classList.remove('open');
+            });
+            
+            document.getElementById('troubleshootBtn').addEventListener('click', function() {
+                document.getElementById('guideOverlay').classList.add('active');
+                menu.classList.remove('open');
+            });
+            
+            document.getElementById('loginUtilityBtn').addEventListener('click', function() {
+                document.getElementById('loginModal').classList.add('active');
+                menu.classList.remove('open');
+            });
+            
+            document.getElementById('settingsUtilityBtn').addEventListener('click', function() {
+                document.getElementById('settingsPanel').classList.add('open');
+                menu.classList.remove('open');
+            });
+        }
+        
+        // 发布博客面板
+        function setupPublishPanel() {
+            const addBlogBtn = document.getElementById('addBlogBtn');
+            const closePublish = document.getElementById('closePublish');
+            const publishPanel = document.getElementById('publishPanel');
+            
+            addBlogBtn.addEventListener('click', function() {
+                // 重置表单
+                document.getElementById('blogTitle').value = '';
+                document.getElementById('blogTags').value = '';
+                document.getElementById('blogContent').innerHTML = '';
+                document.getElementById('blogFile').value = '';
+                document.getElementById('fileList').innerHTML = '';
+                uploadedFiles = [];
+                
+                // 更新发布按钮
+                const publishBtn = document.getElementById('publishBtn');
+                delete publishBtn.dataset.editId;
+                publishBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${translations[currentLanguage].publish}`;
+                
+                publishPanel.classList.add('open');
+            });
+            
+            closePublish.addEventListener('click', function() {
+                publishPanel.classList.remove('open');
+            });
+        }
+        
+        // 登录功能
+        function setupLogin() {
+            const loginBtn = document.getElementById('loginUtilityBtn');
+            const closeLogin = document.getElementById('closeLogin');
+            const loginModal = document.getElementById('loginModal');
+            const loginSubmit = document.getElementById('loginSubmit');
+            const githubLogin = document.getElementById('githubLogin');
+            
+            loginBtn.addEventListener('click', function() {
+                loginModal.classList.add('active');
+            });
+            
+            closeLogin.addEventListener('click', function() {
+                loginModal.classList.remove('active');
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (email && password) {
+                    // 模拟登录
+                    isLoggedIn = true;
+                    loginModal.classList.remove('active');
+                    showSyncIndicator();
+                } else {
+                    alert('请输入邮箱和密码');
+                }
+            });
+            
+            githubLogin.addEventListener('click', function() {
+                // 模拟GitHub登录
+                isLoggedIn = true;
+                loginModal.classList.remove('active');
+                showSyncIndicator();
+            });
+        }
+        
+        // 显示同步指示器
+        function showSyncIndicator() {
+            const indicator = document.getElementById('syncIndicator');
+            indicator.classList.add('active');
+            
+            setTimeout(() => {
+                indicator.classList.remove('active');
+            }, 3000);
+        }
+        
+        // 彩蛋功能
+        function setupEasterEgg() {
+            document.body.addEventListener('click', function(e) {
+                if (!e.target.closest('.card') && 
+                    !e.target.closest('.btn') && 
+                    !e.target.closest('.nav-item') &&
+                    !e.target.closest('.utility-btn')) {
+                    clickCount++;
+                    
+                    if (clickCount >= 10) {
+                        document.getElementById('easterEgg').classList.add('active');
+                        clickCount = 0;
+                    }
+                }
+            });
+            
+            document.getElementById('closeEasterEgg').addEventListener('click', function() {
+                document.getElementById('easterEgg').classList.remove('active');
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 检测移动设备
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                document.body.classList.add('mobile');
+            }
+            
+            // 更新时间
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            // 添加波纹效果
+            const enterBtn = document.getElementById('enterBtn');
+            enterBtn.addEventListener('click', enterWebsite);
+            
+            // 设置导航
+            setupNavigation();
+            
+            // 设置导航栏位置
+            setupNavPosition();
+            
+            // 设置面板
+            setupSettings();
+            
+            // 导航助手
+            setupGuide();
+            
+            // 文件上传
+            setupFileUpload();
+            
+            // 多功能菜单
+            setupUtilityMenu();
+            
+            // 发布博客面板
+            setupPublishPanel();
+            
+            // 登录功能
+            setupLogin();
+            
+            // 彩蛋功能
+            setupEasterEgg();
+            
+            // 关闭博客阅读器
+            document.getElementById('closeBlog').addEventListener('click', () => {
+                document.getElementById('blogViewer').classList.remove('active');
+            });
+            
+            // 语言切换
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const lang = this.dataset.lang;
+                    applyLanguage(lang);
+                    localStorage.setItem('language', lang);
+                    
+                    // 更新设置面板中的语言选项
+                    document.querySelectorAll('input[name="language"]').forEach(radio => {
+                        if (radio.value === lang) {
+                            radio.checked = true;
+                        }
+                    });
+                });
+            });
+            
+            // 设置面板语言切换
+            document.querySelectorAll('input[name="language"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const lang = this.value;
+                    applyLanguage(lang);
+                    localStorage.setItem('language', lang);
+                });
+            });
+            
+            // 博客发布
+            const publishBtn = document.getElementById('publishBtn');
+            if (publishBtn) {
+                publishBtn.addEventListener('click', () => {
+                    const title = document.getElementById('blogTitle').value;
+                    const content = document.getElementById('blogContent').innerHTML;
+                    const tags = document.getElementById('blogTags').value;
+                    const visibility = document.getElementById('blogVisibility').value;
+                    
+                    if (title && content) {
+                        const blogs = JSON.parse(localStorage.getItem('blogs')) || sampleBlogs;
+                        const isEdit = publishBtn.dataset.editId;
+                        
+                        if (isEdit) {
+                            // 编辑现有博客
+                            const index = blogs.findIndex(b => b.id == isEdit);
+                            if (index !== -1) {
+                                blogs[index].title = title;
+                                blogs[index].content = content;
+                                blogs[index].tags = tags;
+                                blogs[index].visibility = visibility;
+                                blogs[index].images = uploadedFiles;
+                            }
+                            delete publishBtn.dataset.editId;
+                            publishBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${translations[currentLanguage].publish}`;
+                        } else {
+                            // 创建新博客
+                            const newBlog = {
+                                id: Date.now(),
+                                title,
+                                content,
+                                tags,
+                                visibility,
+                                images: uploadedFiles,
+                                date: new Date().toISOString()
+                            };
+                            blogs.unshift(newBlog);
+                        }
+                        
+                        localStorage.setItem('blogs', JSON.stringify(blogs));
+                        
+                        // 关闭发布面板
+                        document.getElementById('publishPanel').classList.remove('open');
+                        
+                        // 重新加载博客列表
+                        loadBlogs();
+                        
+                        // 显示同步指示器
+                        if (isLoggedIn) {
+                            showSyncIndicator();
+                        }
+                    } else {
+                        alert('请填写标题和内容');
+                    }
+                });
+            }
+            
+            // 加载保存的语言设置
+            const savedLang = localStorage.getItem('language') || 'zh-CN';
+            applyLanguage(savedLang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.dataset.lang === savedLang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 加载保存的背景设置
+            const customBg = localStorage.getItem('customBackground');
+            if (customBg) {
+                document.body.style.backgroundImage = `url(${customBg})`;
+            }
+            
+            // 加载保存的图标
+            const customIcon = localStorage.getItem('customIcon');
+            if (customIcon) {
+                const link = document.querySelector("link[rel~='icon']");
+                if (link) {
+                    link.href = customIcon;
+                }
+            }
+            
+            // 加载保存的字体
+            const customFont = JSON.parse(localStorage.getItem('customFont'));
+            if (customFont) {
+                const newFont = new FontFace(customFont.name, `url(${customFont.url})`);
+                
+                newFont.load().then(function(loaded) {
+                    document.fonts.add(loaded);
+                    document.body.style.fontFamily = customFont.name + ', sans-serif';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
